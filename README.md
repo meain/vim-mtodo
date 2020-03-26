@@ -6,7 +6,7 @@ A very a simple todo thingy
 
 ### 3 kind + heading
 
-- '#' Heading
+- `#` Heading
 - `-` normal todo
 - `x` done todo
 - `*` important todo
