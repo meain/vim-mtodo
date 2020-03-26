@@ -1,8 +1,10 @@
-# mtodo
+<h1 align="center">mtodo</h1>
+<p align="center">A very a simple todo thingy</p>
+<p align="center">
+  <img src="https://i.imgur.com/eNX2ucF.png">
+</p>
 
-A very a simple todo thingy
-
-*Just set ft=mtodo `set ft=mtodo`*
+_Just set ft=mtodo `set ft=mtodo`_
 
 ### 3 kind + heading
 
@@ -11,8 +13,7 @@ A very a simple todo thingy
 - `x` done todo
 - `*` important todo
 
-*Todo items can be nested*
-
+_Todo items can be nested_
 
 ### 3 mappings
 
