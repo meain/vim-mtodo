@@ -17,7 +17,6 @@ function s:MoveCompletedToBottom() abort
             break
         endif
     endfor
-    " echo spaces.'.'
 
     " 1: check down till number of space changes
     while pos < l:total_lines
@@ -33,14 +32,26 @@ function s:MoveCompletedToBottom() abort
     " 2: check up till startswith x fails
     while pos > l:line_number
         let line = getline(pos)
-        if line !~# spaces.'x'
+        if line !~# spaces.'[ x]'
             break
         endif
         let pos = pos-1
     endwhile
 
+    " Move the exact line
     execute l:line_number 'delete _'
     let failed = append(pos-1, l:current_line)
+
+    " Need to move sub items as well
+    let line = getline(l:line_number)
+    while line =~# spaces.' '
+        let line = substitute(line, '^\( *\).', '\1x', '')
+        execute l:line_number 'delete _'
+        let failed = append(pos-1, line)
+        let line = getline(l:line_number)
+    endwhile
+
+    execute 'normal!k'
 endfunction
 command -bang MTODOMoveCompletedToBottom call <sid>MoveCompletedToBottom()
 
