@@ -4,21 +4,36 @@ function s:MoveCompletedToBottom() abort
     let l:total_lines = line('$')
     let pos = l:line_number
 
+    if l:current_line !~# '^\ *x'
+        echo "Not a done item, cannot move."
+        return
+    endif
+
+    let spaces = '^'
+    for char in split(l:current_line, '\zs')
+        if char ==# ' '
+            let spaces = spaces.' '
+        else
+            break
+        endif
+    endfor
+    " echo spaces.'.'
+
     " 1: check down till number of space changes
-    let start_pattern = ''  " Check for indent(count of spaces)
     while pos < l:total_lines
         let line = getline(pos)
-        if line !~# start_pattern
+        if line !~# spaces
+            let pos = pos - 1
             break
         endif
         let pos = pos+1
     endwhile
+    echo pos
 
     " 2: check up till startswith x fails
-    let start_pattern = 'x'  " Check for start of done
     while pos > l:line_number
         let line = getline(pos)
-        if line !~# start_pattern
+        if line !~# spaces.'x'
             break
         endif
         let pos = pos-1
@@ -32,7 +47,7 @@ command -bang MTODOMoveCompletedToBottom call <sid>MoveCompletedToBottom()
 if !exists("g:vim_mtodo_disable_keybindings")
     augroup plugin_mtodo
         autocmd!
-        autocmd FileType mtodo nnoremap <silent>gd :normal!mt0g^rx`t<cr>
+        autocmd FileType mtodo nnoremap <silent>gd :normal!mt0g^rx`t<cr>:MTODOMoveCompletedToBottom<cr>
         autocmd FileType mtodo nnoremap <silent>gu :normal!mt0g^r-`t<cr>
         autocmd FileType mtodo nnoremap <silent>gs :normal!mt0g^r*`t<cr>
     augroup end
