@@ -27,12 +27,11 @@ function s:MoveCompletedToBottom() abort
         endif
         let pos = pos+1
     endwhile
-    echo pos
 
     " 2: check up till startswith x fails
     while pos > l:line_number
         let line = getline(pos)
-        if line !~# spaces.'[ x]'
+        if line !~# spaces.' *x'
             break
         endif
         let pos = pos-1
@@ -50,6 +49,19 @@ function s:MoveCompletedToBottom() abort
         let failed = append(pos-1, line)
         let line = getline(l:line_number)
     endwhile
+
+    " Mark todo items as done without move
+    if pos == l:line_number
+        let ln = pos+1
+        let line = getline(ln)
+        while line =~# spaces.' '
+            let line = getline(ln)
+            let changed_line = substitute(line, '^\( *\).', '\1x', '')
+            call setline(ln, changed_line)
+            let ln = ln+1
+            let line = getline(ln)
+        endwhile
+    endif
 
     execute 'normal!k'
 endfunction
