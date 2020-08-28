@@ -19,7 +19,7 @@ _Todo items can be nested_
 
 ### 3 mappings
 
-- `gd` mark done
+- `gd` mark done and move to bottom
 - `gu` mark undone
 - `gs` mark important (star)
 
