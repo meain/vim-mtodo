@@ -4,7 +4,9 @@
   <img src="https://i.imgur.com/eNX2ucF.png">
 </p>
 
-_Just set ft=mtodo `set ft=mtodo`_
+## Usage
+
+_Just `set ft=mtodo` to use it_
 
 ### 3 kind + heading
 
@@ -20,3 +22,22 @@ _Todo items can be nested_
 - `gd` mark done
 - `gu` mark undone
 - `gs` mark important (star)
+
+
+## Customizing
+
+### Colors
+
+```
+highlight default link MTODOTitle SpecialKey
+highlight default link MTODOPending Normal
+highlight default link MTODODone Comment
+highlight default link MTODOImportant Question
+```
+
+
+### Disable keybindings
+
+```
+let g:vim_mtodo_disable_keybindings=1
+```
