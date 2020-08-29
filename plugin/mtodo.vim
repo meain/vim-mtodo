@@ -61,6 +61,7 @@ function s:MoveCompletedToBottom() abort
             let ln = ln+1
             let line = getline(ln)
         endwhile
+        execute 'normal!k'
     endif
 endfunction
 command -bang MTODOMoveCompletedToBottom call <sid>MoveCompletedToBottom()
