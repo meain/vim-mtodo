@@ -21,7 +21,7 @@ function s:MoveCompletedToBottom() abort
     " 1: check down till number of space changes
     while pos < l:total_lines
         let line = getline(pos)
-        if line !~# spaces
+        if line !~# spaces || line =~# '#' || len(line) ==# 0
             let pos = pos - 1
             break
         endif
@@ -67,11 +67,26 @@ function s:MoveCompletedToBottom() abort
 endfunction
 command -bang MTODOMoveCompletedToBottom call <sid>MoveCompletedToBottom()
 
-if !exists("g:vim_mtodo_disable_keybindings")
+function s:ChangeMark(mark) abort
+    let l:current_line = getline(line('.'))
+    if l:current_line =~# '^\ *#'
+        echo "Cannot change headings"
+        return
+    endif
+    execute 'normal!mt0g^r'.a:mark.'`t'
+    if exists("g:vim_mtodo_move_done_to_bottom") && g:vim_mtodo_move_done_to_bottom && a:mark ==# 'x'
+        call s:MoveCompletedToBottom()
+    endif
+endfunction
+command -bang MTODOMarkAsDone call <sid>ChangeMark('x')
+command -bang MTODOMarkAsUndone call <sid>ChangeMark('-')
+command -bang MTODOMarkAsStarred call <sid>ChangeMark('*')
+
+if !exists("g:vim_mtodo_disable_keybindings") || g:vim_mtodo_disable_keybindings == 0
     augroup plugin_mtodo
         autocmd!
-        autocmd FileType mtodo nnoremap <silent>gd :normal!mt0g^rx`t<cr>:MTODOMoveCompletedToBottom<cr>
-        autocmd FileType mtodo nnoremap <silent>gu :normal!mt0g^r-`t<cr>
-        autocmd FileType mtodo nnoremap <silent>gs :normal!mt0g^r*`t<cr>
+        autocmd FileType mtodo nnoremap <silent>gd :MTODOMarkAsDone<cr>
+        autocmd FileType mtodo nnoremap <silent>gu :MTODOMarkAsUndone<cr>
+        autocmd FileType mtodo nnoremap <silent>gs :MTODOMarkAsStarred<cr>
     augroup end
 endif
