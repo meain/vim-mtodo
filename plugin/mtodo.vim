@@ -1,4 +1,4 @@
-function s:MoveCompletedToBottom() abort
+function! s:MoveCompletedToBottom() abort
     let l:current_line = getline(line('.'))
     let l:line_number = line('.')
     let l:total_lines = line('$')
@@ -66,7 +66,7 @@ function s:MoveCompletedToBottom() abort
 endfunction
 command -bang MTODOMoveCompletedToBottom call <sid>MoveCompletedToBottom()
 
-function s:ChangeMark(mark) abort
+function! s:ChangeMark(mark) abort
     let l:current_line = getline(line('.'))
     if l:current_line =~# '^\ *#'
         echo "Cannot change headings"
