@@ -41,3 +41,13 @@ highlight default link MTODOImportant Question
 ```
 let g:vim_mtodo_disable_keybindings=1
 ```
+
+### Commands
+
+```
+MTODOMarkAsDone  " Mark item as done
+MTODOMarkAsUndone  " Mark item as undone
+MTODOMarkAsStarred  " Mark item as starred
+MTODOMoveCompletedToBottom  " Move item to bottom if completed
+MTODOReorderAllTodo  " Move all completed items to bottom
+```
