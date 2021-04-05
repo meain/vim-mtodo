@@ -42,6 +42,14 @@ highlight default link MTODOImportant Question
 let g:vim_mtodo_disable_keybindings=1
 ```
 
+### Disable automatic move
+
+By default `vim-mtodo` moves the competed task to bottom. You can disable this by setting:
+
+```
+let g:vim_mtodo_move_done_to_bottom=0
+```
+
 ### Commands
 
 ```
